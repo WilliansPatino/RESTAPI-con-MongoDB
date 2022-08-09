@@ -5,6 +5,13 @@ const Usuario = require('../models/usuario');  // El standard sugiere
                                                // iniciar con Mayuscula esta
                                                // variable.-
 
+// encriptar el password
+function encryptPassword( pass ) {
+  const salt = bcryptjs.genSaltSync();
+  ep = bcryptjs.hashSync(pass, salt);
+  return ep;
+}
+
 const usuariosGet = async(request, response) => {
 
     const { limite = 5, desde = 0 } = request.query;
@@ -39,13 +46,8 @@ const usuariosPost = async(req, response) => {
   // Se deestructura los campos  para validar y registra solo lo deseado
   const usuario = new Usuario( { nombre, email, password, role } );  
   
-
-  // encriptar el password
-  function encryptPassword( password ) {
-    const salt = bcryptjs.genSaltSync();
-    usuario.password = bcryptjs.hashSync(password, salt);
-    return usuario.password;
-  }
+  usuario.password = encryptPassword(password);
+  
 
   // Guardar el registro en la BD
   await usuario.save();
@@ -64,15 +66,19 @@ const usuariosPut = async(request, response) => {
 
     const { id }  = request.params;
 
-    // se excluye el password, google, email y id para evitar que sean modificdos
-    // const {_id,  password, google, status, email, ... restoData } = request.body;
-    const {_id,  password, google, status,  ... restoData } = request.body;
+    // ***** Se excluyen para evitar que sean modificados ***********
+    //        id, password, google, status y el email 
+    const {_id,  password, google, status, email,  ... restoData } = request.body;
+    // Para mantener la integridad referencial con autenticación basada en GMAIL
+    // se excluye la modificación del email.
+
 
     // validar ID contra la BD
     if ( password ) {
         // encryptPassword(restoData);
-        const salt = bcryptjs.genSaltSync();
-        restoData.password = bcryptjs.hashSync(password, salt);
+        // const salt = bcryptjs.genSaltSync();
+        // restoData.password = bcryptjs.hashSync(password, salt);
+        restoData.password = encryptPassword(password);
     }
 
     // User data

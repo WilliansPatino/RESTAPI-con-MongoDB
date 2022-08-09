@@ -1,11 +1,13 @@
-#   Rest Server + Webserver
+#   Rest Server + Webserver con MongoDB
 
-    Desarrollado durante las prácticas del curso de Node JS
+Desarrollado durante las prácticas del curso de Node JS
 
 
-  * Después de descargar este, no olvidar ejecutar  para reconstruir los módulos de la aplicación
+  ## No olvidar: 
+    Antes de usar la aplicación, es necesario reconstruir los módulos.-
 
-  ```npm install ```
+  ```npm install 
+  ```
 
   
 
