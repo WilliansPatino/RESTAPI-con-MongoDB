@@ -65,7 +65,8 @@ const usuariosPut = async(request, response) => {
     const { id }  = request.params;
 
     // se excluye el password, google, email y id para evitar que sean modificdos
-    const {_id,  password, google, email, ... restoData } = request.body;
+    // const {_id,  password, google, status, email, ... restoData } = request.body;
+    const {_id,  password, google, status,  ... restoData } = request.body;
 
     // validar ID contra la BD
     if ( password ) {
