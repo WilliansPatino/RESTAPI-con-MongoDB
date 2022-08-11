@@ -44,7 +44,7 @@ const UsuarioSchema = Schema({
     google: {
       type: Boolean,
       default: false
-    },
+    }
 
 });
 
@@ -53,7 +53,12 @@ const UsuarioSchema = Schema({
 // campos que se desea 'no mostrar' en la respuesta
 // una instancia 
 UsuarioSchema.methods.toJSON = function() {
-    const { __v, password,  ... public_data  } = this.toObject();
+    const { __v, password, _id, ... public_data  } = this.toObject();
+    //    { --v, password, _id, ...}  datos a excluir de ser mostrado :: Seccion: 10
+
+    // Se transforma el _id para mostrar como uid  (seccion: 10)
+    public_data.uid = _id;
+
     return public_data;
 }
 
