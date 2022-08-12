@@ -13,7 +13,7 @@ const createJWT = ( uid = '' ) => {
           console.log('Token query for UID:', uid);
 
           jwt.sign( payload, process.env.PRIVATEORSECRETKEY, {
-              expiresIn: '1h'
+              expiresIn: '30m'
           }, ( err, token ) => {
 
               if (err) {
