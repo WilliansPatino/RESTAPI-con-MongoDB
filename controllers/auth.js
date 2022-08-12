@@ -16,6 +16,7 @@ const login = async(req, res = response) => {
     try {
         // verificar si existe el email
         const accountToVerify = await Usuario.findOne( { email } );
+        
 
         if ( !accountToVerify ) {
             return res.status(400).json({
@@ -40,10 +41,13 @@ const login = async(req, res = response) => {
         }
 
         // Generar el JWT
-        const token = await createJWT(usuario.id);
+        const token = await createJWT(accountToVerify.id);
+
+        console.log('Auth login verified:', accountToVerify.id);
+        // console.log('TOKEN Generated:', token);
         
       res.json({
-        msg: 'Acceso permitido!',
+        msg: 'Login successful',
         accountToVerify,
         token
       })

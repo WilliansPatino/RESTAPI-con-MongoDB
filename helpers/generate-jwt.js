@@ -10,13 +10,15 @@ const createJWT = ( uid = '' ) => {
         // recomendable registar informacion sensible de la cuenta.
           const payload = { uid };
 
+          console.log('Token query for UID:', uid);
+
           jwt.sign( payload, process.env.PRIVATEORSECRETKEY, {
-              expiresIn: '4h'
+              expiresIn: '1h'
           }, ( err, token ) => {
 
               if (err) {
                   console.log(err);
-                  reject('No se pude generar el token')
+                  reject('Hubo un fallo en la generación del token')
               } else {
                   resolve(token);
               }

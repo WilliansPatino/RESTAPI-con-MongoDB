@@ -43,7 +43,7 @@ const usuariosPost = async(req, response) => {
   const { nombre, email, password, role } = req.body;    
 
 
-  // Se deestructura los campos  para validar y registra solo lo deseado
+  // Se deestructura solo los campos que se desea para validar y modificar
   const usuario = new Usuario( { nombre, email, password, role } );  
   
   usuario.password = encryptPassword(password);
@@ -101,6 +101,8 @@ const usuariosDelete = async(request, response) => {
 
     const { id }  = request.params;
 
+  
+
     // ********* Borrado físico de un registro en la BD **********
     // const usuario = await Usuario.findByIdAndDelete( id );
     // ----- Nota: 
@@ -109,11 +111,15 @@ const usuariosDelete = async(request, response) => {
     //  se perdería la INTEGRIDAD REFERENCIAL
 
     // Cambiar el status del registro para indicar que fue eliminado
-    const user_delete = await Usuario.findByIdAndUpdate( id, { status: false} );
+    const user2Delete = await Usuario.findByIdAndUpdate( id, { status: false} );
+
+    // Authorized account info
+    const allInfoAuthorizedAccount = request.authInfo;
 
     response.json({ 
         // msg: 'API Delete  - controlador'
-        user_delete
+        user2Delete,
+        allInfoAuthorizedAccount
     });
 }
 

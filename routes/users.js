@@ -15,8 +15,11 @@ const { usuariosGet,
   const router = Router();
   
   const { validateFields } = require('../middlewares/validate-fields');
+  const { validateJWT } = require('../middlewares/validate-jwt');
+  
   const { isValidRole, emailAlreadyExist, 
       idAlreadyExist } = require('../helpers/db-validators');
+
 
   
     // endpoints
@@ -30,7 +33,7 @@ const { usuariosGet,
       // check('role', 'El rol no es permitido').isIn(['ADMIN_ROLE','USER_ROLE']),          
       check('role').custom( isValidRole ), 
             validateFields
-      ] , usuariosPost );
+      ], usuariosPost );
 
     router.put('/:id',[ 
         check('id', 'No es un iD válido').isMongoId(),
@@ -40,6 +43,7 @@ const { usuariosGet,
     ], usuariosPut );
 
     router.delete('/:id',[
+      validateJWT,
       check('id', 'No es un iD válido').isMongoId(),
       check('id').custom( idAlreadyExist ),
       validateFields
