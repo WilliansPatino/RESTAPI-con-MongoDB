@@ -14,9 +14,21 @@ const { usuariosGet,
   
   const router = Router();
   
+  /**** seccion: 10 - 148. Optimizar importaciones en Node JS  ****/
+  /* 
   const { validateFields } = require('../middlewares/validate-fields');
   const { validateJWT } = require('../middlewares/validate-jwt');
-  const { isAdminRole, haveRole } = require('../middlewares/validate-role');
+  const { isAdminRole, haveRole } = require('../middlewares/validate-role'); 
+  */
+  /**
+   *    Estas 3 lineas se migraron a ../middleware/index
+   */
+  const {
+      validateFields,
+      validateJWT,
+      isAdminRole,
+      haveRole
+  } = require('../middlewares/index');
   
   const { isValidRole, emailAlreadyExist, 
       idAlreadyExist } = require('../helpers/db-validators');

@@ -1,50 +1,51 @@
 const { request, response } = require("express");
 
 
-const isAdminRole = (req= request, res = response, next ) => {
+const isAdminRole = (req = request, res = response, next ) => {
 
-  if ( !req.authInfo ) {
-      return res.status(500).json({
-          msg: 'Se quiere validar el rol sin validar el token primero'
-        });
+      if ( !req.authInfo ) {
+        return res.status(500).json({
+            msg: 'Intenta validar el rol antes de validar el token'
+          });
+        }
+        
+        const { role, nombre } = req.authInfo;
+        
+        if ( role !== 'ADMIN_ROLE') {
+          return res.status(401).json({
+            msg: `La cuenta no tiene ninguno de estos roles: administrador, desarrollador o propietario`
+          });
+        }
+        
+        next();
+        
       }
       
-      const { role, nombre } = req.authInfo;
-      
-      if ( role !== 'ADMIN_ROLE') {
-        return res.status(401).json({
-          msg: `Acción Denegada: 
-          La cuenta ${nombre} no tiene alguno de estos roles: Administrador, desarrollador o propietario`
-        });
-      }
-      
-      next();
-      
-}
-
-const haveRole = ( ... roles ) => {
-
-  return ( req, res = response, next) => {
-
-    console.log('VALIDATE_ROLE:', roles);
-    
-    if ( !req.authInfo ) {
-      return res.status(500).json({
-        msg: 'Se quiere validar el rol sin validar el token primero'
+      const haveRole = ( ... roles ) => {
+        
+        return ( req = request, res = response, next) => {
+          
+          console.log('VALIDATE_ROLE:', roles);
+          
+          if ( !req.authInfo ) {
+            return res.status(500).json({
+              msg: 'Intenta validar el rol antes de validar el token'
           });
     }
 
-    if ( !roles.includes( req.authInfo.role ) ) {
+
+    if ( !roles.includes(req.authInfo.role) ) {
       return res.status(401).json({
-        msg: `El servicio requiere alguno de estos roles: ${roles}`
+        msg: `la solicitud requiere uno de estos roles: ${roles}`
       });
     }
 
+    next();
+    
     }
 
-  next();
-
-}
+    
+  }
 
 
 module.exports = {

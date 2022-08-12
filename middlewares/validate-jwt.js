@@ -15,7 +15,7 @@ const validateJWT = async (req = request, res = response, next ) => {
 
     if ( !tokenReceived ) {
         return res.status(401).json({
-            msg: 'No se recibió token en la petición'
+            msg: 'Token no fue recibido en la petición'
         });
     }
 
@@ -51,7 +51,7 @@ const validateJWT = async (req = request, res = response, next ) => {
 
           console.log(error);
           res.status(401).json({
-              msg: 'Token inválido!'
+              msg: 'Su sessión ha caducado o Token inválido!'
           })
     }
 
