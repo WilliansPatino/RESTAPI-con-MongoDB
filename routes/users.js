@@ -16,6 +16,7 @@ const { usuariosGet,
   
   const { validateFields } = require('../middlewares/validate-fields');
   const { validateJWT } = require('../middlewares/validate-jwt');
+  const { haveAdminRole } = require('../middlewares/validate-role');
   
   const { isValidRole, emailAlreadyExist, 
       idAlreadyExist } = require('../helpers/db-validators');
@@ -44,6 +45,7 @@ const { usuariosGet,
 
     router.delete('/:id',[
       validateJWT,
+      haveAdminRole,
       check('id', 'No es un iD válido').isMongoId(),
       check('id').custom( idAlreadyExist ),
       validateFields

@@ -35,16 +35,16 @@ const validateJWT = async (req = request, res = response, next ) => {
                 })
         }
         
-        req.authInfo = authorizedAccount;
-
+        
         // Verificar si la cuenta autenticada tiene el status de activa
         if ( !authorizedAccount.status) {
             return res.status(401).json({
-                    msg: 'Token no autorizado - Cuenta eliminada'
+                msg: 'Token no autorizado - Cuenta eliminada'
             })
         }
-
-
+        
+        req.authInfo = authorizedAccount;
+        
        next();
 
     } catch (error) {
