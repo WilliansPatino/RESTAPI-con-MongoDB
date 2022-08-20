@@ -1,7 +1,7 @@
 // Todo el Contenido de este archivo es nuevo para cubrir la seccion: 10
 const { Router } = require('express');
 const { check } = require('express-validator');  
-const { login } = require('../controllers/auth');
+const { login, googleSignIn } = require('../controllers/auth');
 const { validateFields } = require('../middlewares/validate-fields');
 
 // instancia del router
@@ -12,6 +12,11 @@ router.post('/login',[
   check('password', 'La contraseña es obligatoria').not().isEmpty(), 
   validateFields
 ], login );
+
+router.post('/google',[
+  check('id_token', 'Token de Google es obligatorio').not().isEmpty(),
+  validateFields
+], googleSignIn );
 
 
 module.exports = router;
