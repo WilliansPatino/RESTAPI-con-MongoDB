@@ -43,12 +43,12 @@
 
       let url = ( window.location.hostname.includes('localhost'))
           ? 'http://localhost:8080/api/auth/google'
-          : 'https://restapi-server-mongodb.herokuapp.com'
+          : 'https://restapi-server-mongodb.herokuapp.com/api/auth/google'
 
       console.log('Redirect to this URL ', url);
   
       /*fetch('http://localhost:8080/api/auth/google', {*/
-      fetch(url, {
+      fetch(`${url}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
