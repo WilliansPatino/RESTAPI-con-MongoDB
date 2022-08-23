@@ -1,5 +1,10 @@
 const { request, response } = require("express");
 
+const admin_roles = [ 
+      'ADMIN_ROLE', 
+      'DEVELOPER',
+      'OWNER'
+];
 
 const isAdminRole = (req = request, res = response, next ) => {
 
@@ -11,9 +16,13 @@ const isAdminRole = (req = request, res = response, next ) => {
         
         const { role, nombre } = req.authInfo;
         
-        if ( role !== 'ADMIN_ROLE') {
+        if ( !admin_roles.includes(role) ) {
+        // if ( !role.includes('ADMIN_ROLE') ) {
           return res.status(401).json({
-            msg: `La cuenta no tiene ninguno de estos roles: administrador, desarrollador o propietario`
+            msg: `La cuenta no tiene ninguno de estos roles:`,
+            ADMIN_ROLE: 'Administrador',
+            DEVELOPER: 'Desarrolladores',
+            DIRECTOR: 'Director o Propietario'
           });
         }
         

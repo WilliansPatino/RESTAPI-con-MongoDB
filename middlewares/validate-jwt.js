@@ -11,7 +11,7 @@ const validateJWT = async (req = request, res = response, next ) => {
     // leer headers
     const tokenReceived = req.header('x-token')
 
-    console.log('TOKEN received:', tokenReceived); // oly for monitoring
+    // console.log('TOKEN received:', tokenReceived); // only for monitoring
 
     if ( !tokenReceived ) {
         return res.status(401).json({

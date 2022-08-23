@@ -11,11 +11,20 @@ class Server {
     this.app = express();
     this.port = process.env.PORT;
 
-    // API
+    /*
+    // API Endpoints
     this.usersRoutePath = '/api/usuarios';
-    
-    // seccion: 10 
-    this.authPath = '/api/auth';
+    this.authPath = '/api/auth';        // seccion: 10
+    */
+
+    // los endpoints/rutas anteriores se cambia a este objeto
+    this.paths = {
+        auth:       '/api/auth',
+        categories: '/api/categories',
+        usuarios:   '/api/usuarios'
+    }
+
+
 
     // Connect the database
     this.connectDB();
@@ -46,8 +55,16 @@ class Server {
 
   routes() {
 
+      /* 
       this.app.use( this.authPath, require('../routes/auth')); // seccion: 10
       this.app.use(this.usersRoutePath, require('../routes/users'));
+     
+     //  se usa el nuevo modelo de ruta con el objeto 'this.paths' 
+     *
+     */
+     this.app.use( this.paths.auth, require('../routes/auth') );
+     this.app.use( this.paths.categories, require('../routes/categories') );
+     this.app.use( this.paths.usuarios, require('../routes/users') );
 
   }
 
