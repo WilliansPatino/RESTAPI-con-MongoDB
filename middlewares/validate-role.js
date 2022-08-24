@@ -19,10 +19,12 @@ const isAdminRole = (req = request, res = response, next ) => {
         if ( !admin_roles.includes(role) ) {
         // if ( !role.includes('ADMIN_ROLE') ) {
           return res.status(401).json({
-            msg: `La cuenta no tiene ninguno de estos roles:`,
+            alert: 'No tiene permiso para eliminar reste registro',
+            msg: `El usuario no tiene ninguno de estos roles:`,
             ADMIN_ROLE: 'Administrador',
             DEVELOPER: 'Desarrolladores',
-            DIRECTOR: 'Director o Propietario'
+            DIRECTOR: 'Director o Propietario',
+            notes: 'Hable con el Administrador'
           });
         }
         

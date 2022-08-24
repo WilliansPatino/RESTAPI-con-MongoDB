@@ -28,8 +28,7 @@ const categoryAlreadyExist = async( name = '' ) => {
         // return response.status(400).json({
         //     msg: 'Este email ya fue registrado!'
         // });
-  }
-
+  } 
 }
 
 
