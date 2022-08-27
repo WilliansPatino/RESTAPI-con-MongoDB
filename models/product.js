@@ -29,6 +29,7 @@ const ProductSchema = Schema({
     },
     description: { type: String},
     available: { type: Boolean, default: true },
+    img: { type: String },
 });
 
 // extraer selectivamente los campos que no vamos a usar del objeto
